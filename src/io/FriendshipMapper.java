@@ -18,4 +18,5 @@ interface FriendshipMapper {
     List<String> getFriends(String username) throws PersistenceException;
     void put(Friendship f) throws PersistenceException;
     Friendship get(String requester, String recipient)  throws PersistenceException;
+    List<String> getPending(String username) throws PersistenceException;
 }

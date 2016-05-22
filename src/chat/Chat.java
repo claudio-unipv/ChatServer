@@ -2,6 +2,7 @@ package chat;
 
 import io.PersistenceException;
 import io.PersistenceFacade;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -45,17 +46,31 @@ public class Chat {
      * @throws ChatError 
      */
     public RegisteredUser login(String nickname, char[] password) throws ChatError {
-        RegisteredUser u;
+        UserData data;
         try {
-            u = pFacade.getUser(nickname);
+            data = pFacade.getUser(nickname);
         } catch (PersistenceException ex) {
             Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
             throw new ChatError("DB error: " + ex.getMessage());
         }
-        if (u == null || !u.checkPassword(password))
+        if (data == null)
             throw new ChatError("Invalid username or password");
+        RegisteredUser u = new RegisteredUser(data);
+        if (!u.checkPassword(password))
+            throw new ChatError("Invalid username or password");
+        
         loggedUsers.put(u.getNickname(), u);
         return u;
+    }
+    
+    private List<Participant> loggedSubset(List<String> names) {
+        List<Participant> ret = new ArrayList<>();
+        for (String n : names) {
+            Participant p = loggedUsers.get(n);
+            if (p != null)
+                ret.add(p);
+        }
+        return ret;
     }
     
     /**
@@ -67,15 +82,14 @@ public class Chat {
     public void logout(RegisteredUser user) throws ChatError {        
         loggedUsers.remove(user.getNickname());
         // notify the online friends
-        List<RegisteredUser> friends;
+        List<String> friends;
         try {                        
             friends = pFacade.getFriends(user.getNickname());            
         } catch (PersistenceException ex) {
             throw new ChatError(ex);
         }        
-        for (RegisteredUser u : friends)
-            if (loggedUsers.containsKey(u.getNickname()))
-                u.deliverMessage(user, user.getNickname() + " disconnected");
+        for (Participant p : loggedSubset(friends))
+            p.deliverMessage(administrator, user.getNickname() + " disconnected");
     }
     
     /**
@@ -90,7 +104,7 @@ public class Chat {
         try {
             if (pFacade.getUser(nickname) != null)
                 throw new ChatError("Nickname already taken");                  
-            RegisteredUser u = new RegisteredUser(nickname, email, password);
+            UserData u = new UserData(nickname, email, password);
             pFacade.putUser(u);
         } catch (PersistenceException ex) {
             Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
@@ -210,22 +224,28 @@ public class Chat {
         String msg = "Hello " + recipient + ", welcome to the chat!";
         sendMessage(administrator, recipient, msg);
         
-        // Notify to friends        
-        msg = "Online friends:";
-        List<RegisteredUser> friends;
+        // Notify to friends                
+        List<String> friends;
+        List<String> pending;
         try {
             friends = pFacade.getFriends(recipient);
+            pending = pFacade.getPendingFriends(recipient);
         } catch (PersistenceException ex) {
             Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
             // This is not so important, in case of error we can skip it.
             return;
         }
-        for (RegisteredUser f : friends) {
-            if (loggedUsers.containsKey(f.getNickname())) {
-                msg += " " + f.getNickname();
-                sendMessage(administrator, f.getNickname(), recipient + " is online");
-            }
-        }                           
+        msg = "Online friends:";
+        for (Participant f : loggedSubset(friends)) {
+            msg += " " + f.getNickname();
+            f.deliverMessage(administrator, recipient + " is online");
+        }
+        sendMessage(administrator, recipient, msg);
+        
+        // List pending requests of friendship
+        msg = "Pending requests of friendship:";
+        for (String n : pending)
+            msg += " " + n;
         sendMessage(administrator, recipient, msg);
     }
 

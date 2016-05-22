@@ -7,7 +7,7 @@
  */
 package io;
 
-import chat.RegisteredUser;
+import chat.UserData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -25,7 +25,7 @@ public class RDBUserMapper extends UserMapper {
     }
 
     @Override
-    protected RegisteredUser getUserFromStorage(String username) throws PersistenceException {        
+    protected UserData getUserFromStorage(String username) throws PersistenceException {        
         String email;
         char[] pwd;
         try {
@@ -37,11 +37,11 @@ public class RDBUserMapper extends UserMapper {
         } catch (SQLException ex) {
             throw new PersistenceException(ex);
         }
-        return new RegisteredUser(username, email, pwd);
+        return new UserData(username, email, pwd);
     }
 
     @Override
-    protected void putUserToStorage(RegisteredUser u) throws PersistenceException {
+    protected void putUserToStorage(UserData u) throws PersistenceException {
         if (getUserFromStorage(u.getNickname()) == null)
             rdbop.insertUser(u);
         else

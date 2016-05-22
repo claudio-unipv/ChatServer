@@ -27,23 +27,6 @@ class RDBFriendshipMapper implements FriendshipMapper {
     }
     
     @Override
-    public List<String> getFriends(String username) throws PersistenceException {
-        ResultSet rs = rdbops.getAllFriends(username);
-        ArrayList<String> ret = new ArrayList<>();
-        try {
-            while (rs.next()) {
-                String u = rs.getString("Requester");
-                if (u.equals(username))
-                    u = rs.getString("Requested");
-                ret.add(u);
-            }
-        } catch (SQLException ex) {
-            throw new PersistenceException(ex);
-        }
-        return ret;
-    }    
-
-    @Override
     public void put(Friendship f) throws PersistenceException {
         if (get(f.getRequester(), f.getRequested()) == null)
             rdbops.insertFriendship(f);
@@ -66,4 +49,34 @@ class RDBFriendshipMapper implements FriendshipMapper {
             throw new PersistenceException(ex);
         }
     }
+
+    @Override
+    public List<String> getFriends(String username) throws PersistenceException {
+        ResultSet rs = rdbops.getAllFriends(username);
+        ArrayList<String> ret = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                String u = rs.getString("Requester");
+                if (u.equals(username))
+                    u = rs.getString("Requested");
+                ret.add(u);
+            }
+        } catch (SQLException ex) {
+            throw new PersistenceException(ex);
+        }
+        return ret;
+    }    
+
+    @Override
+    public List<String> getPending(String user) throws PersistenceException {
+        ResultSet rs = rdbops.getPendingRequests(user);
+        ArrayList<String> ret = new ArrayList<>();
+        try {
+            while (rs.next())
+                ret.add(rs.getString("Requester"));
+        } catch (SQLException ex) {
+            throw new PersistenceException(ex);
+        }
+        return ret;
+    }        
 }

@@ -7,7 +7,7 @@
  */
 package io;
 
-import chat.RegisteredUser;
+import chat.UserData;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -17,12 +17,12 @@ import java.util.Map;
  */
 public abstract class UserMapper {
     
-    LinkedHashMap<String, RegisteredUser> cachedUsers;
+    LinkedHashMap<String, UserData> cachedUsers;
     
     UserMapper(final int cacheSize) {
         /* The cache is represented by a LinkedHashMap, a collection that allows
          * to specificy if ans when old elements must be deleted. */
-        cachedUsers = new LinkedHashMap<String, RegisteredUser>() {
+        cachedUsers = new LinkedHashMap<String, UserData>() {
             @Override
             protected boolean removeEldestEntry(Map.Entry eldest) {
                 return size() > cacheSize;
@@ -30,8 +30,8 @@ public abstract class UserMapper {
         };
     }
     
-    synchronized RegisteredUser get(String username) throws PersistenceException {
-        RegisteredUser u = cachedUsers.get(username);
+    synchronized UserData get(String username) throws PersistenceException {
+        UserData u = cachedUsers.get(username);
         if (u == null) {
             u = getUserFromStorage(username);
             if (u != null)
@@ -40,11 +40,11 @@ public abstract class UserMapper {
         return u;
     }
     
-    synchronized void put(RegisteredUser user) throws PersistenceException {
+    synchronized void put(UserData user) throws PersistenceException {
         cachedUsers.put(user.getNickname(), user);
         putUserToStorage(user);
     }
     
-    protected abstract RegisteredUser getUserFromStorage(String username) throws PersistenceException;
-    protected abstract void putUserToStorage(RegisteredUser u) throws PersistenceException;
+    protected abstract UserData getUserFromStorage(String username) throws PersistenceException;
+    protected abstract void putUserToStorage(UserData u) throws PersistenceException;
 }

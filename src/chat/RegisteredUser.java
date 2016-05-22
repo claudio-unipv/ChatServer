@@ -10,9 +10,7 @@ import java.util.List;
  * @author Claudio Cusano
  */
 public class RegisteredUser implements Participant {
-    String nickname;
-    String email;
-    char[] password;
+    UserData data;
     List<RegisteredUserObserver> observers;
     
     /**
@@ -23,15 +21,23 @@ public class RegisteredUser implements Participant {
      * @param password  the password
      */
     public RegisteredUser(String nickname, String email, char[] password) {
-        this.nickname = nickname;
-        this.email = email;
-        this.password = password;
+        data = new UserData(nickname, email, password);
+        observers = new ArrayList<>();
+    }
+    
+    /**
+     * Create the user.
+     * 
+     * @param data information about the user
+     */
+    public RegisteredUser(UserData data) {
+        this.data = data;
         observers = new ArrayList<>();
     }
     
     @Override
     public String getNickname() {
-        return nickname;
+        return data.getNickname();
     }
 
     /**
@@ -40,7 +46,7 @@ public class RegisteredUser implements Participant {
      * @return 
      */
     public String getEmail() {
-        return email;
+        return data.getEmail();
     }
     
     /**
@@ -49,7 +55,7 @@ public class RegisteredUser implements Participant {
      * @return 
      */
     public char[] getPassword() {
-        return password;
+        return data.getPassword();
     }
     
     @Override
@@ -65,7 +71,7 @@ public class RegisteredUser implements Participant {
      * @return whether the password match or not
      */
     boolean checkPassword(char[] password) {        
-        return Arrays.equals(password, this.password);
+        return Arrays.equals(password, data.getPassword());
     }
 
     /**

@@ -21,22 +21,7 @@ class MemoryFriendshipMapper implements FriendshipMapper {
     // Constructor.
     MemoryFriendshipMapper() {
         friendships = new ArrayList<>();
-    }
-    
-    @Override
-    public List<String> getFriends(String username) throws PersistenceException {
-        ArrayList<String> ret = new ArrayList<>();
-        for (Friendship f : friendships) {
-            if (f.getStatus() == Friendship.Status.ACCEPTED) {
-                if (username.equals(f.getRequester())) {
-                    ret.add(f.getRequested());
-                } else if (username.equals(f.getRequested())) {
-                    ret.add(f.getRequester());
-                }
-            }
-        }
-        return ret;
-    }
+    }        
 
     @Override
     public void put(Friendship f) throws PersistenceException {
@@ -54,5 +39,29 @@ class MemoryFriendshipMapper implements FriendshipMapper {
             if (requester.equals(f.getRequester()) && recipient.equals(f.getRequested()))
                 return f;
         return null;
+    }
+
+    @Override
+    public List<String> getFriends(String username) throws PersistenceException {
+        ArrayList<String> ret = new ArrayList<>();
+        for (Friendship f : friendships) {
+            if (f.getStatus() == Friendship.Status.ACCEPTED) {
+                if (username.equals(f.getRequester())) {
+                    ret.add(f.getRequested());
+                } else if (username.equals(f.getRequested())) {
+                    ret.add(f.getRequester());
+                }
+            }
+        }
+        return ret;
+    }
+    
+    @Override
+    public List<String> getPending(String user) throws PersistenceException {
+        ArrayList<String> ret = new ArrayList<>();
+        for (Friendship f : friendships)
+            if (f.getStatus() == Friendship.Status.PENDING && user.equals(f.getRequested()))
+                ret.add(f.getRequester());
+        return ret;
     }
 }

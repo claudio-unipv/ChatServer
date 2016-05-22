@@ -8,7 +8,7 @@
 package io;
 
 import chat.Friendship;
-import chat.RegisteredUser;
+import chat.UserData;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -32,6 +32,8 @@ public class RDBOperations {
         }
     }
 
+    // -- Users operations -----------------------------------------------------
+    
     ResultSet getUser(String username) throws PersistenceException {
         String sql = "SELECT * FROM Users where Nickname = ?";
         try {
@@ -43,7 +45,7 @@ public class RDBOperations {
         }
     }
 
-    void updateUser(RegisteredUser u) throws PersistenceException {
+    void updateUser(UserData u) throws PersistenceException {
         String sql = "UPDATE Users SET Email=?,Password=? WHERE Nickname=?";
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -56,6 +58,21 @@ public class RDBOperations {
         }
     }
 
+    void insertUser(UserData u) throws PersistenceException {
+        String sql = "INSERT INTO Users VALUES(?, ?, ?)";
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, u.getNickname());
+            stmt.setString(2, u.getEmail());
+            stmt.setString(3, new String(u.getPassword()));
+            stmt.execute();
+        } catch (SQLException ex) {
+            throw new PersistenceException(ex);
+        }
+    }    
+    
+    // -- Friendships operations -----------------------------------------------
+    
     ResultSet getFriendship(String requester, String requested) throws PersistenceException {
         String sql = "SELECT * FROM Friendships " +
                      "WHERE Requester = ? and Requested = ?";
@@ -83,18 +100,18 @@ public class RDBOperations {
         }
     }
     
-    void insertUser(RegisteredUser u) throws PersistenceException {
-        String sql = "INSERT INTO Users VALUES(?, ?, ?)";
+    ResultSet getPendingRequests(String user) throws PersistenceException {
+        String sql = "SELECT * FROM Friendships WHERE " +
+                "Requested = ? AND STATUS = ?";
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, u.getNickname());
-            stmt.setString(2, u.getEmail());
-            stmt.setString(3, new String(u.getPassword()));
-            stmt.execute();
+            stmt.setString(1, user);
+            stmt.setString(2, "PENDING");
+            return stmt.executeQuery();
         } catch (SQLException ex) {
             throw new PersistenceException(ex);
         }
-    }    
+    }
     
     void insertFriendship(Friendship f) throws PersistenceException {
         String sql = "INSERT INTO Friendships VALUES(?, ?, ?)";

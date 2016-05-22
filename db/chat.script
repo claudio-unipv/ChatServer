@@ -49,5 +49,5 @@ SET SCHEMA PUBLIC
 INSERT INTO USERS VALUES('paperino','paperino@paperopoli.it','1234')
 INSERT INTO USERS VALUES('pippo','pippo@topolinia.it','1234')
 INSERT INTO USERS VALUES('pluto','pluto@topolinia.it','1234')
-INSERT INTO FRIENDSHIPS VALUES('paperino','pippo','PENDING   ')
+INSERT INTO FRIENDSHIPS VALUES('paperino','pippo','ACCEPTED  ')
 INSERT INTO FRIENDSHIPS VALUES('pippo','pluto','ACCEPTED  ')

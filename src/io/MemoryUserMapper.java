@@ -7,7 +7,7 @@
  */
 package io;
 
-import chat.RegisteredUser;
+import chat.UserData;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 class MemoryUserMapper extends UserMapper {
 
-    Map<String, RegisteredUser> users;
+    Map<String, UserData> users;
     
     MemoryUserMapper() {
         super(0);
@@ -25,12 +25,12 @@ class MemoryUserMapper extends UserMapper {
     }
     
     @Override
-    protected RegisteredUser getUserFromStorage(String username) {
+    protected UserData getUserFromStorage(String username) {
         return users.get(username);
     }
 
     @Override
-    protected void putUserToStorage(RegisteredUser u) {
+    protected void putUserToStorage(UserData u) {
         users.put(u.getNickname(), u);
     }    
 }

@@ -8,8 +8,7 @@
 package io;
 
 import chat.Friendship;
-import chat.RegisteredUser;
-import java.util.ArrayList;
+import chat.UserData;
 import java.util.List;
 
 /**
@@ -45,7 +44,7 @@ public class PersistenceFacade {
      * @return the requested user object or null if he does not exist
      * @throws io.PersistenceException
      */
-    public RegisteredUser getUser(String username) throws PersistenceException {
+    public UserData getUser(String username) throws PersistenceException {
         return userMapper.get(username);
     }
     
@@ -54,7 +53,7 @@ public class PersistenceFacade {
      * @param user user information to be stored.
      * @throws io.PersistenceException
      */
-    public void putUser(RegisteredUser user) throws PersistenceException {
+    public void putUser(UserData user) throws PersistenceException {
         userMapper.put(user);
     }
     
@@ -64,11 +63,18 @@ public class PersistenceFacade {
      * @return the list of names of the friends
      * @throws io.PersistenceException
      */
-    public List<RegisteredUser> getFriends(String user) throws PersistenceException {
-        List<RegisteredUser> friends = new ArrayList<>();
-        for (String s : friendshipMapper.getFriends(user))
-            friends.add(userMapper.get(s));
-        return friends;        
+    public List<String> getFriends(String user) throws PersistenceException {
+        return friendshipMapper.getFriends(user);            
+    }
+    
+    /**
+     * Return the list of names of pending request of friendship for the given user.
+     * @param user the name of the user
+     * @return the list of names of the users waiting an answer
+     * @throws io.PersistenceException
+     */
+    public List<String> getPendingFriends(String user) throws PersistenceException {
+        return friendshipMapper.getPending(user);            
     }
 
     /**
