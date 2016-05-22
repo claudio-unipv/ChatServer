@@ -13,5 +13,7 @@
 hs_err_pid*
 /build/
 
-# db lock
+# db
 db/chat.lck
+db/chat.log
+db/chat.tmp/
