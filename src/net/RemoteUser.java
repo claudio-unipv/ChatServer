@@ -67,6 +67,15 @@ class RemoteUser extends Thread implements RegisteredUserObserver {
         out.println("OK");
     }
     
+    // throw if the user is not logged in
+    private boolean checkLogged() {
+        if (user == null) {
+            error("must be logged-in");
+            return false;
+        }
+        return true;
+    }
+    
     // Create the dispatch table mapping commands to actions.
     private void registerCommands() {
         commands = new HashMap<>();
@@ -115,10 +124,8 @@ class RemoteUser extends Thread implements RegisteredUserObserver {
         commands.put("SEND", new Command() {
             @Override
             public void execute(String args) throws ChatError {
-                if (user == null) {
-                    error("must be logged-in");
+                if (!checkLogged())
                     return;
-                }
                 String[] tokens = args.split("\\s+", 2);
                 if (tokens.length < 2) {
                     error("a recipient i required");
@@ -132,12 +139,37 @@ class RemoteUser extends Thread implements RegisteredUserObserver {
         commands.put("BROADCAST", new Command() {
             @Override
             public void execute(String args) throws ChatError {
-                if (user == null) {
-                    error("must be logged-in");
-                    return;
+                if (checkLogged()) {
+                    chat.broadCastMessage(user, args);
+                    ok();
                 }
-                ok();
-                chat.broadCastMessage(user, args);
+            }
+        });
+        commands.put("REQ_FRIENDSHIP", new Command() {
+            @Override
+            public void execute(String args) throws ChatError {
+                if (checkLogged()) {
+                    chat.requestFriendship(user.getNickname(), args);
+                    ok();
+                }
+            }
+        });
+        commands.put("ACCEPT_FRIENDSHIP", new Command() {
+            @Override
+            public void execute(String args) throws ChatError {
+                if (checkLogged()) {
+                    chat.acceptFriendship(user.getNickname(), args);
+                    ok();
+                }
+            }
+        });
+        commands.put("REJECT_FRIENDSHIP", new Command() {
+            @Override
+            public void execute(String args) throws ChatError {
+                if (checkLogged()) {
+                    chat.rejectFriendship(user.getNickname(), args);
+                    ok();
+                }
             }
         });
     }
@@ -189,7 +221,11 @@ class RemoteUser extends Thread implements RegisteredUserObserver {
         } finally {
             if (user != null) {
                 user.removeObserver(this);
-                chat.logout(user);
+                try {
+                    chat.logout(user);
+                } catch (ChatError ex) {
+                    Logger.getLogger(RemoteUser.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             try {
                 socket.close();

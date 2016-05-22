@@ -84,5 +84,5 @@ public class RegisteredUser implements Participant {
      */
     public void removeObserver(RegisteredUserObserver observer) {
         observers.remove(observer);
-    }
+    }        
 }

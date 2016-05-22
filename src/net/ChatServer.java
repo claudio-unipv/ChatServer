@@ -1,7 +1,7 @@
 package net;
 
 import chat.Chat;
-import chat.Participant;
+import chat.ChatError;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -60,22 +60,22 @@ public class ChatServer {
         final int PORT = 8888;
         final String USERS_FILE = "users.txt";
         
-        final Chat chat = new Chat(USERS_FILE);
-        ChatServer server = new ChatServer(chat, PORT);
-        
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                Logger.getLogger(ChatServer.class.getName()).log(Level.INFO,
-                        "Shutting down the server...");
-                chat.shutdown(3);
-            }
-        });
-        
         try {            
+            final Chat chat = new Chat(USERS_FILE);
+            ChatServer server = new ChatServer(chat, PORT);
+        
+            Runtime.getRuntime().addShutdownHook(new Thread() {
+                @Override
+                public void run() {
+                    Logger.getLogger(ChatServer.class.getName()).log(Level.INFO,
+                            "Shutting down the server...");
+                    chat.shutdown(3);
+                }
+            });
+                
             server.startServer();
-        } catch (IOException ex) {
-            Logger.getLogger(ChatServer.class.getName()).log(Level.INFO, null, ex);
+        } catch (IOException | ChatError ex) {
+            Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

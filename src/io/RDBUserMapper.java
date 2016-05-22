@@ -10,8 +10,6 @@ package io;
 import chat.RegisteredUser;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Use a Relational Data Base to manage the storage of the users.

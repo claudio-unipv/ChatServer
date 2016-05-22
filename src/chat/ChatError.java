@@ -22,4 +22,13 @@ public class ChatError extends Exception {
     public ChatError(String msg) {
         super(msg);
     }
+
+    /**
+     * Constructs an instance of <code>ChatError</code> from another exception.
+     *
+     * @param msg the detail message.
+     */
+    ChatError(Exception ex) {
+        super(ex);
+    }
 }
