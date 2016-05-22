@@ -13,8 +13,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Manage the queries to the database.
@@ -25,6 +23,11 @@ public class RDBOperations {
 
     RDBOperations() throws PersistenceException {
         try {
+            Class.forName("org.hsqldb.jdbc.JDBCDriver" );
+        } catch (ClassNotFoundException ex) {
+            throw new PersistenceException(ex);
+        }
+        try {            
             conn = DriverManager.getConnection("jdbc:hsqldb:file:db/chat", "SA", "");
         } catch (SQLException ex) {
             throw new PersistenceException(ex);

@@ -21,7 +21,7 @@ public class PersistenceFacade {
      * Provide access to the Facade.
      * @return the unique instance of the Facade.
      */
-    public synchronized PersistenceFacade getInstance() throws PersistenceException {
+    public static synchronized PersistenceFacade getInstance() throws PersistenceException {
         if (instance == null)
             instance = new PersistenceFacade();
         return instance;

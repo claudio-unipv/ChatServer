@@ -5,7 +5,6 @@ import chat.ChatError;
 import chat.Participant;
 import chat.RegisteredUser;
 import chat.RegisteredUserObserver;
-import io.UsersRegistry;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -52,7 +51,7 @@ class RemoteUser extends Thread implements RegisteredUserObserver {
     private void log(Level level, String msg) {
         String name = (user == null ? "null" : user.getNickname());
         String txt = "[" + name + "] " + msg;
-        Logger.getLogger(UsersRegistry.class.getName()).log(level, txt);
+        Logger.getLogger(RemoteUser.class.getName()).log(level, txt);
     }
     
     
@@ -186,7 +185,7 @@ class RemoteUser extends Thread implements RegisteredUserObserver {
                 }
             }            
         } catch (IOException ex) {
-            Logger.getLogger(UsersRegistry.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RemoteUser.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (user != null) {
                 user.removeObserver(this);
@@ -195,7 +194,7 @@ class RemoteUser extends Thread implements RegisteredUserObserver {
             try {
                 socket.close();
             } catch (IOException ex) {
-                Logger.getLogger(UsersRegistry.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RemoteUser.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

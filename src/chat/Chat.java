@@ -1,6 +1,7 @@
 package chat;
 
-import io.UsersRegistry;
+import io.PersistenceException;
+import io.PersistenceFacade;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
@@ -14,9 +15,7 @@ import java.util.logging.Logger;
  */
 public class Chat {
     
-    Map<String, RegisteredUser> registeredUsers;
     Map<String, Participant> loggedUsers;
-    UsersRegistry registry;
     Administrator administrator;
     
     /**
@@ -26,27 +25,25 @@ public class Chat {
      */
     public Chat(String filename) {
         loggedUsers = new ConcurrentHashMap<>();
-        registry = new UsersRegistry(filename);
-        registeredUsers = registry.loadUSers();        
-        administrator = new Administrator();
-        
-        String msg = "" + registeredUsers.size() + " registered users:";
-        for (String s : registeredUsers.keySet())
-            msg += " " + s;
-        Logger.getLogger(Chat.class.getName()).log(Level.INFO, msg);
+        administrator = new Administrator();        
     }
     
     /**
      * Login an already registered user.
      * 
      * @param nickname the nickname
-     * @param password email of the user
      * @param password the password
      * @return the user object corresponding to the given credentials
      * @throws ChatError 
      */
     public RegisteredUser login(String nickname, char[] password) throws ChatError {
-        RegisteredUser u = registeredUsers.get(nickname);
+        RegisteredUser u;
+        try {
+            u = PersistenceFacade.getInstance().getUser(nickname);
+        } catch (PersistenceException ex) {
+            Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ChatError("DB error: " + ex.getMessage());
+        }
         if (u == null || !u.checkPassword(password))
             throw new ChatError("Invalid username or password");
         loggedUsers.put(u.getNickname(), u);
@@ -66,16 +63,20 @@ public class Chat {
      * Request the registration of a new user
      * 
      * @param nickname the nickname
-     * @param password email of the user
+     * @param email email of the user
      * @param password the password
      * @throws ChatError 
      */
     public synchronized void register(String nickname, String email, char[] password) throws ChatError {
-        // Check if there are registeredUsers with the same email or nickname.
-        if (registeredUsers.get(nickname) != null)
-            throw new ChatError("Nickname already taken");                  
-        registeredUsers.put(nickname, new RegisteredUser(nickname, email, password));
-        registry.saveUsers(registeredUsers);
+        try {
+            if (PersistenceFacade.getInstance().getUser(nickname) != null)
+                throw new ChatError("Nickname already taken");                  
+            RegisteredUser u = new RegisteredUser(nickname, email, password);
+            PersistenceFacade.getInstance().putUser(u);
+        } catch (PersistenceException ex) {
+            Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ChatError("DB error: " + ex.getMessage());
+        }
     }
 
     /**

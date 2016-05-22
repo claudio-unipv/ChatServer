@@ -2,7 +2,6 @@ package net;
 
 import chat.Chat;
 import chat.Participant;
-import io.UsersRegistry;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
