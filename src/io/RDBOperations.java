@@ -20,7 +20,7 @@ import java.sql.Statement;
  * Manage the queries to the database.
  * @author Claudio Cusano <claudio.cusano@unipv.it>
  */
-public class RDBOperations {
+class RDBOperations {
     Connection conn;
     final static String DB_URL = "jdbc:hsqldb:file:db/chat";
 

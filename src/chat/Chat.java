@@ -31,7 +31,7 @@ public class Chat {
         loggedUsers = new ConcurrentHashMap<>();
         administrator = new Administrator();
         try {
-            pFacade = PersistenceFacade.getInstance();
+            pFacade = new PersistenceFacade();
         } catch (PersistenceException ex) {
             throw new ChatError(ex);
         }

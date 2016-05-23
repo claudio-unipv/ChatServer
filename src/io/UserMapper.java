@@ -15,7 +15,7 @@ import java.util.Map;
  * Manage the storage of registered users.
  * @author Claudio Cusano <claudio.cusano@unipv.it>
  */
-public abstract class UserMapper {
+abstract class UserMapper {
     
     LinkedHashMap<String, UserData> cachedUsers;
     

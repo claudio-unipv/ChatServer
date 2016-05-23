@@ -15,7 +15,7 @@ import java.sql.SQLException;
  * Use a Relational Data Base to manage the storage of the users.
  * @author Claudio Cusano <claudio.cusano@unipv.it>
  */
-public class RDBUserMapper extends UserMapper {
+class RDBUserMapper extends UserMapper {
     
     RDBOperations rdbop;
     

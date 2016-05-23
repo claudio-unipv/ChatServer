@@ -16,26 +16,17 @@ import java.util.List;
  * @author Claudio Cusano <claudio.cusano@unipv.it>
  */
 public class PersistenceFacade {
-    static PersistenceFacade instance;
     UserMapper userMapper;
     FriendshipMapper friendshipMapper;
     
     /**
-     * Provide access to the Facade.
-     * @return the unique instance of the Facade.
-     * @throws io.PersistenceException
+     * Create the facade.
+     * @throws PersistenceException 
      */
-    public static synchronized PersistenceFacade getInstance() throws PersistenceException {
-        if (instance == null)
-            instance = new PersistenceFacade();
-        return instance;
-    }
-    
-    // private to enforce the singleton pattern.
-    private PersistenceFacade() throws PersistenceException {
-        RDBOperations rdbop = new RDBOperations();
-        userMapper = new RDBUserMapper(rdbop, 10);
-        friendshipMapper = new RDBFriendshipMapper(rdbop);
+    public PersistenceFacade() throws PersistenceException {
+        MappersFactory factory = new MappersFactory();        
+        userMapper = factory.getUserMapper();
+        friendshipMapper = factory.getFriendshipMapper();
     }
     
     /**
