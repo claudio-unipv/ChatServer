@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg height="635" version="1.1" width="1281" xmlns="http://www.w3.org/2000/svg">
+<svg height="638" version="1.1" width="1281" xmlns="http://www.w3.org/2000/svg">
 <rect fill="#ffc8ff" height="150" stroke="#ffc8ff" stroke-width="1" width="263" x="442" y="64"/>
 <rect fill="none" height="150" stroke="#000000" stroke-width="1" width="263" x="442" y="64"/>
 <text font-family="Dialog" font-size="12" x="513" y="77">
@@ -94,7 +94,7 @@ status : Status</text>
 <line fill="#000000" stroke="#000000" stroke-width="1" x1="332" x2="327" y1="144" y2="144"/>
 <line fill="#000000" stroke="#000000" stroke-width="1" x1="334" x2="322" y1="137" y2="144"/>
 <line fill="#000000" stroke="#000000" stroke-width="1" x1="334" x2="322" y1="151" y2="144"/>
-<polyline fill="none" points="704,208 882,208 882,272" stroke="#000000" stroke-width="1"/>
+<polyline fill="none" points="704,184 882,184 882,272" stroke="#000000" stroke-width="1"/>
 <line fill="#000000" stroke="#000000" stroke-width="1" x1="875" x2="882" y1="260" y2="272"/>
 <line fill="#000000" stroke="#000000" stroke-width="1" x1="889" x2="882" y1="260" y2="272"/>
 <text font-family="Dialog" font-size="12" x="895" y="255">
@@ -113,12 +113,10 @@ cachedUsers</text>
 <text font-family="Dialog" font-size="12" x="816" y="453">
 RDBUserMapper</text>
 <rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="257" x="738" y="463"/>
-<text font-family="Dialog" font-size="12" x="742" y="477">
-conn : Connection</text>
-<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="257" x="738" y="487"/>
-<text font-family="Dialog" font-size="12" x="742" y="501">
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="257" x="738" y="485"/>
+<text font-family="Dialog" font-size="12" x="742" y="499">
 getUserFromStorage(String) : UserData</text>
-<text font-family="Dialog" font-size="12" x="742" y="517">
+<text font-family="Dialog" font-size="12" x="742" y="515">
 putUserToStorage(UserData)</text>
 <rect fill="#ffc8ff" height="85" stroke="#ffc8ff" stroke-width="1" width="257" x="1010" y="440"/>
 <rect fill="none" height="85" stroke="#000000" stroke-width="1" width="257" x="1010" y="440"/>
@@ -136,27 +134,29 @@ putUserToStorage(UserData)</text>
 <polyline fill="none" points="898,440 898,388" stroke="#000000" stroke-width="1"/>
 <polygon fill="#ffffff" points="898,388 905,400 891,400" stroke="#ffffff" stroke-width="1"/>
 <polygon fill="none" points="898,388 905,400 891,400" stroke="#000000" stroke-width="1"/>
-<rect fill="#ffc8ff" height="181" stroke="#ffc8ff" stroke-width="1" width="265" x="442" y="440"/>
-<rect fill="none" height="181" stroke="#000000" stroke-width="1" width="265" x="442" y="440"/>
+<rect fill="#ffc8ff" height="184" stroke="#ffc8ff" stroke-width="1" width="265" x="442" y="440"/>
+<rect fill="none" height="184" stroke="#000000" stroke-width="1" width="265" x="442" y="440"/>
 <text font-family="Dialog" font-size="12" x="527" y="453">
 RDBOperations</text>
 <rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="265" x="442" y="463"/>
-<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="265" x="442" y="484"/>
-<text font-family="Dialog" font-size="12" x="446" y="498">
+<text font-family="Dialog" font-size="12" x="446" y="477">
+conn : Connection</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="265" x="442" y="487"/>
+<text font-family="Dialog" font-size="12" x="446" y="501">
 getUser(String) : ResultSet</text>
-<text font-family="Dialog" font-size="12" x="446" y="514">
+<text font-family="Dialog" font-size="12" x="446" y="517">
 insertUser(UserData)</text>
-<text font-family="Dialog" font-size="12" x="446" y="530">
+<text font-family="Dialog" font-size="12" x="446" y="533">
 updateUser(UserData)</text>
-<text font-family="Dialog" font-size="12" x="446" y="546">
+<text font-family="Dialog" font-size="12" x="446" y="549">
 getFriendship(String,String) : ResultSet</text>
-<text font-family="Dialog" font-size="12" x="446" y="562">
+<text font-family="Dialog" font-size="12" x="446" y="565">
 insertFriendship(Friendship)</text>
-<text font-family="Dialog" font-size="12" x="446" y="578">
+<text font-family="Dialog" font-size="12" x="446" y="581">
 updateFriendship(Friendship)</text>
-<text font-family="Dialog" font-size="12" x="446" y="594">
+<text font-family="Dialog" font-size="12" x="446" y="597">
 getAllFriends(String) : ResultSet</text>
-<text font-family="Dialog" font-size="12" x="446" y="610">
+<text font-family="Dialog" font-size="12" x="446" y="613">
 getPendingRequests(String) : ResultSet</text>
 <polyline fill="none" points="874,527 874,560 706,560" stroke="#000000" stroke-width="1"/>
 <line fill="#000000" stroke="#000000" stroke-width="1" x1="718" x2="706" y1="553" y2="560"/>
@@ -165,12 +165,12 @@ getPendingRequests(String) : ResultSet</text>
 1</text>
 <text font-family="Dialog" font-size="12" x="705" y="580">
 rdbops</text>
-<polyline fill="none" points="1146,440 1146,152 1036,152" stroke="#000000" stroke-width="1"/>
-<line fill="#000000" stroke="#000000" stroke-width="1" x1="1048" x2="1036" y1="145" y2="152"/>
-<line fill="#000000" stroke="#000000" stroke-width="1" x1="1048" x2="1036" y1="159" y2="152"/>
-<text font-family="Dialog" font-size="12" x="1047" y="143">
+<polyline fill="none" points="1146,440 1146,144 1036,144" stroke="#000000" stroke-width="1"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="1048" x2="1036" y1="137" y2="144"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="1048" x2="1036" y1="151" y2="144"/>
+<text font-family="Dialog" font-size="12" x="1047" y="135">
 0..*</text>
-<text font-family="Dialog" font-size="12" x="1043" y="167">
+<text font-family="Dialog" font-size="12" x="1043" y="159">
 users</text>
 <rect fill="#ffc8ff" height="115" stroke="#ffc8ff" stroke-width="1" width="217" x="138" y="272"/>
 <rect fill="none" height="115" stroke="#000000" stroke-width="1" width="217" x="138" y="272"/>
@@ -253,31 +253,24 @@ getFriendshipMapper() : FriendshipMapper</text>
 1</text>
 <text font-family="Dialog" font-size="12" x="763" y="392">
 userMapper</text>
-<polyline fill="none" points="474,356 474,384 354,384" stroke="#000000" stroke-width="1"/>
-<line fill="#000000" stroke="#000000" stroke-width="1" x1="366" x2="354" y1="377" y2="384"/>
-<line fill="#000000" stroke="#000000" stroke-width="1" x1="366" x2="354" y1="391" y2="384"/>
-<text font-family="Dialog" font-size="12" x="365" y="379">
+<polyline fill="none" points="474,356 474,376 354,376" stroke="#000000" stroke-width="1"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="366" x2="354" y1="369" y2="376"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="366" x2="354" y1="383" y2="376"/>
+<text font-family="Dialog" font-size="12" x="365" y="371">
 1</text>
-<text font-family="Dialog" font-size="12" x="363" y="403">
+<text font-family="Dialog" font-size="12" x="369" y="390">
 friendshipMapper</text>
-<line fill="#000000" stroke="#000000" stroke-width="1" x1="570" x2="570" y1="356" y2="361"/>
-<line fill="#000000" stroke="#000000" stroke-width="1" x1="570" x2="570" y1="366" y2="371"/>
-<line fill="#000000" stroke="#000000" stroke-width="1" x1="570" x2="570" y1="376" y2="381"/>
-<line fill="#000000" stroke="#000000" stroke-width="1" x1="570" x2="570" y1="386" y2="391"/>
-<line fill="#000000" stroke="#000000" stroke-width="1" x1="570" x2="570" y1="396" y2="401"/>
-<line fill="#000000" stroke="#000000" stroke-width="1" x1="570" x2="570" y1="406" y2="411"/>
-<line fill="#000000" stroke="#000000" stroke-width="1" x1="570" x2="570" y1="416" y2="421"/>
-<line fill="#000000" stroke="#000000" stroke-width="1" x1="570" x2="570" y1="426" y2="431"/>
-<line fill="#000000" stroke="#000000" stroke-width="1" x1="570" x2="570" y1="436" y2="440"/>
-<line fill="#000000" stroke="#000000" stroke-width="1" x1="563" x2="570" y1="428" y2="440"/>
-<line fill="#000000" stroke="#000000" stroke-width="1" x1="577" x2="570" y1="428" y2="440"/>
-<polyline fill="none" points="570,213 570,272" stroke="#000000" stroke-width="1"/>
-<line fill="#000000" stroke="#000000" stroke-width="1" x1="563" x2="570" y1="260" y2="272"/>
-<line fill="#000000" stroke="#000000" stroke-width="1" x1="577" x2="570" y1="260" y2="272"/>
-<text font-family="Dialog" font-size="12" x="583" y="255">
-1</text>
-<text font-family="Dialog" font-size="12" x="525" y="239">
-factory</text>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="578" x2="578" y1="356" y2="361"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="578" x2="578" y1="366" y2="371"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="578" x2="578" y1="376" y2="381"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="578" x2="578" y1="386" y2="391"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="578" x2="578" y1="396" y2="401"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="578" x2="578" y1="406" y2="411"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="578" x2="578" y1="416" y2="421"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="578" x2="578" y1="426" y2="431"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="578" x2="578" y1="436" y2="440"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="571" x2="578" y1="428" y2="440"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="585" x2="578" y1="428" y2="440"/>
 <line fill="#000000" stroke="#000000" stroke-width="1" x1="258" x2="258" y1="272" y2="267"/>
 <line fill="#000000" stroke="#000000" stroke-width="1" x1="258" x2="258" y1="262" y2="257"/>
 <line fill="#000000" stroke="#000000" stroke-width="1" x1="258" x2="258" y1="252" y2="247"/>
@@ -289,4 +282,12 @@ factory</text>
 <line fill="#000000" stroke="#000000" stroke-width="1" x1="258" x2="258" y1="192" y2="189"/>
 <line fill="#000000" stroke="#000000" stroke-width="1" x1="265" x2="258" y1="201" y2="189"/>
 <line fill="#000000" stroke="#000000" stroke-width="1" x1="251" x2="258" y1="201" y2="189"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="578" x2="578" y1="213" y2="218"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="578" x2="578" y1="223" y2="228"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="578" x2="578" y1="233" y2="238"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="578" x2="578" y1="243" y2="248"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="578" x2="578" y1="253" y2="258"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="578" x2="578" y1="263" y2="268"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="571" x2="578" y1="260" y2="272"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="585" x2="578" y1="260" y2="272"/>
 </svg>
